@@ -2,36 +2,40 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Falling Stars Collector ⭐</title>
+<title>Star Catcher Deluxe ⭐🌌</title>
 
 <style>
     body {
         margin: 0;
-        padding: 0;
         overflow: hidden;
-        background: linear-gradient(#1b0036, #3d0066);
-        font-family: Arial, sans-serif;
+        font-family: "Poppins", sans-serif;
+        background: url("https://i.pinimg.com/originals/3f/9f/6c/3f9f6c8b2355450759df3cb31c8b6ffa.gif");
+        background-size: cover;
     }
 
+    /* --- Player Character --- */
     #player {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         position: absolute;
         bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background-image: url('https://cdn-icons-png.flaticon.com/512/616/616430.png');
         background-size: cover;
+        filter: drop-shadow(0 0 10px white);
+        display: none;
     }
 
+    /* --- Falling Items --- */
     .star {
         width: 50px;
         height: 50px;
         position: absolute;
-        top: -50px;
-        background-image: url('https://cdn-icons-png.flaticon.com/512/1828/1828884.png');
+        top: -60px;
+        background-image: url("https://cdn-icons-png.flaticon.com/512/1828/1828884.png");
         background-size: cover;
-        animation: fall 3s linear forwards;
+        animation: fall 3.2s linear forwards;
+        filter: drop-shadow(0 0 6px #ffdd66);
     }
 
     .bomb {
@@ -39,23 +43,57 @@
         height: 55px;
         position: absolute;
         top: -60px;
-        background-image: url('https://cdn-icons-png.flaticon.com/512/562/562623.png');
+        background-image: url("https://cdn-icons-png.flaticon.com/512/562/562623.png");
         background-size: cover;
-        animation: fall 2.7s linear forwards;
+        animation: fall 2.8s linear forwards;
+        filter: drop-shadow(0 0 8px red);
     }
 
     @keyframes fall {
         to { transform: translateY(110vh); }
     }
 
-    #score {
+    /* Scoreboard */
+    #scoreboard {
         position: absolute;
-        color: white;
-        font-size: 2rem;
-        left: 20px;
         top: 20px;
+        left: 20px;
+        color: white;
+        font-size: 1.7rem;
+        text-shadow: 0 0 10px black;
+        display: none;
     }
 
+    /* Instructions */
+    #instructions {
+        position: absolute;
+        top: 15%;
+        width: 100%;
+        text-align: center;
+        font-size: 2.5rem;
+        color: white;
+        text-shadow: 0 0 15px black;
+    }
+
+    /* Start Button */
+    #start-btn {
+        padding: 15px 40px;
+        background: #ff44c4;
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-size: 2rem;
+        margin-top: 20px;
+        cursor: pointer;
+        box-shadow: 0 0 20px #ff44c4;
+        display: none;
+    }
+
+    #start-btn:hover {
+        transform: scale(1.1);
+    }
+
+    /* Game Over */
     #game-over {
         position: absolute;
         width: 100%;
@@ -63,105 +101,209 @@
         top: 40%;
         font-size: 3rem;
         color: white;
+        text-shadow: 0 0 10px black;
         display: none;
     }
 
     #restart {
-        display: none;
-        margin-top: 20px;
         padding: 12px 30px;
-        background: #ff4aad;
-        color: white;
+        background: #ff44c4;
         border: none;
         border-radius: 12px;
-        font-size: 1.5rem;
+        color: white;
+        font-size: 1.8rem;
+        margin-top: 15px;
         cursor: pointer;
+        display: none;
+        box-shadow: 0 0 15px #ff44c4;
     }
 
-    #restart:hover {
-        background: #ff6cc7;
-        transform: scale(1.1);
+    .explode {
+        background-image: url("https://i.gifer.com/7efs.gif");
+        background-size: cover;
+    }
+
+    /* --- Character Select --- */
+    #character-select {
+        text-align: center;
+        color: white;
+        font-size: 2.3rem;
+        margin-top: 40px;
+        text-shadow: 0 0 15px black;
+    }
+
+    .characters {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 30px;
+    }
+
+    .char-option {
+        width: 110px;
+        height: 110px;
+        border-radius: 15px;
+        background-size: cover;
+        border: 4px solid white;
+        cursor: pointer;
+        transition: 0.3s;
+        filter: drop-shadow(0 0 10px black);
+    }
+
+    .char-option:hover {
+        transform: scale(1.15);
+        border-color: #ff44c4;
+    }
+
+    .selected {
+        border-color: #7affff !important;
+        box-shadow: 0 0 20px #7affff;
+        transform: scale(1.2);
     }
 </style>
 </head>
 
 <body>
 
+<!-- CHARACTER SELECT -->
+<div id="character-select">
+    ⭐ Choose Your Character ⭐
+    <div class="characters">
+        <div class="char-option" data-img="https://cdn-icons-png.flaticon.com/512/220/220013.png"
+             style="background-image: url('https://cdn-icons-png.flaticon.com/512/220/220013.png');"></div>
+
+        <div class="char-option" data-img="https://cdn-icons-png.flaticon.com/512/1998/1998627.png"
+             style="background-image: url('https://cdn-icons-png.flaticon.com/512/1998/1998627.png');"></div>
+
+        <div class="char-option" data-img="https://cdn-icons-png.flaticon.com/512/616/616408.png"
+             style="background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');"></div>
+
+        <div class="char-option" data-img="https://cdn-icons-png.flaticon.com/512/616/616430.png"
+             style="background-image: url('https://cdn-icons-png.flaticon.com/512/616/616430.png');"></div>
+    </div>
+
+    <button id="start-btn">START GAME</button>
+</div>
+
+<!-- PLAYER -->
 <div id="player"></div>
-<div id="score">Score: 0</div>
-<div id="game-over">GAME OVER 💀<br><button id="restart">Restart</button></div>
+
+<!-- Scoreboard -->
+<div id="scoreboard">
+    Score: <span id="score">0</span><br>
+    High Score: <span id="highscore">0</span>
+</div>
+
+<!-- Game Over -->
+<div id="game-over">GAME OVER 💀</div>
+<button id="restart">Restart</button>
 
 <script>
-    const player = document.getElementById('player');
-    const scoreDisplay = document.getElementById('score');
-    const gameOverText = document.getElementById('game-over');
-    const restartBtn = document.getElementById('restart');
+    const player = document.getElementById("player");
+    const scoreDisplay = document.getElementById("score");
+    const highScoreDisplay = document.getElementById("highscore");
+    const characterSelect = document.getElementById("character-select");
+    const startBtn = document.getElementById("start-btn");
+    const scoreboard = document.getElementById("scoreboard");
+    const gameOverText = document.getElementById("game-over");
+    const restartBtn = document.getElementById("restart");
 
     let score = 0;
-    let gameOver = false;
+    let isPlaying = false;
 
-    // PLAYER MOVEMENT
-    document.addEventListener("mousemove", (e) => {
-        let x = e.clientX - 40;
-        player.style.left = x + "px";
+    let selectedCharacter = null;
+    let highScore = localStorage.getItem("highscore") || 0;
+    highScoreDisplay.textContent = highScore;
+
+    /* Character selection */
+    document.querySelectorAll(".char-option").forEach(option => {
+        option.addEventListener("click", () => {
+            document.querySelectorAll(".char-option").forEach(o => o.classList.remove("selected"));
+            option.classList.add("selected");
+
+            selectedCharacter = option.dataset.img;
+            startBtn.style.display = "inline-block";
+        });
     });
 
-    // SPAWN FALLING OBJECTS
-    function spawnItem() {
-        if (gameOver) return;
+    /* Start the game */
+    startBtn.onclick = () => {
+        if (!selectedCharacter) return;
 
-        let isBomb = Math.random() < 0.2; 
+        characterSelect.style.display = "none";
+        scoreboard.style.display = "block";
+        player.style.display = "block";
+
+        player.style.backgroundImage = `url('${selectedCharacter}')`;
+        isPlaying = true;
+
+        spawnItems();
+    };
+
+    /* Move player with mouse */
+    document.addEventListener("mousemove", e => {
+        if (isPlaying)
+            player.style.left = (e.clientX - 45) + "px";
+    });
+
+    /* Spawning stars + bombs */
+    function spawnItems() {
+        if (!isPlaying) return;
+
+        let isBomb = Math.random() < 0.25;
         let item = document.createElement("div");
         item.classList.add(isBomb ? "bomb" : "star");
-
         item.style.left = Math.random() * (window.innerWidth - 50) + "px";
+
         document.body.appendChild(item);
 
-        let fallInterval = setInterval(() => {
+        let fall = setInterval(() => {
             let itemRect = item.getBoundingClientRect();
             let playerRect = player.getBoundingClientRect();
 
-            // Check collision
             if (
                 itemRect.bottom >= playerRect.top &&
-                itemRect.top <= playerRect.bottom &&
-                itemRect.right >= playerRect.left &&
-                itemRect.left <= playerRect.right
+                itemRect.left <= playerRect.right &&
+                itemRect.right >= playerRect.left
             ) {
                 if (isBomb) {
+                    explode();
                     endGame();
                 } else {
                     score++;
-                    scoreDisplay.textContent = "Score: " + score;
+                    scoreDisplay.textContent = score;
                 }
                 item.remove();
-                clearInterval(fallInterval);
+                clearInterval(fall);
             }
 
-            // Remove when off screen
             if (itemRect.top > window.innerHeight) {
                 item.remove();
-                clearInterval(fallInterval);
+                clearInterval(fall);
             }
         }, 20);
 
-        setTimeout(spawnItem, isBomb ? 800 : 600);
+        setTimeout(spawnItems, isBomb ? 900 : 600);
     }
 
-    spawnItem();
+    function explode() {
+        player.classList.add("explode");
+        setTimeout(() => player.classList.remove("explode"), 1000);
+    }
 
-    // END GAME
     function endGame() {
-        gameOver = true;
+        isPlaying = false;
         gameOverText.style.display = "block";
-        restartBtn.style.display = "inline-block";
+        restartBtn.style.display = "block";
+
+        if (score > highScore) {
+            localStorage.setItem("highscore", score);
+        }
     }
 
-    // RESTART
-    restartBtn.addEventListener("click", () => {
-        window.location.reload();
-    });
+    restartBtn.onclick = () => window.location.reload();
 </script>
 
 </body>
 </html>
+
