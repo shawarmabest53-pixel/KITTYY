@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cute Cat Universe</title>
+
+<style>
+/* BASIC PAGE STYLE */
+body {
+    margin: 0;
+    font-family: 'Comic Sans MS', sans-serif;
+    background: #ffeef7;
+    overflow-x: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 3rem;
+    color: #ff72c6;
+    text-shadow: 2px 2px white;
+}
+
+/* CONTAINER */
+.container {
+    width: 92%;
+    max-width: 900px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* MAIN CAT IMAGE */
+.cat-img {
+    width: 260px;
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+.cat-img:active { transform: scale(0.9); }
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+/* BUBBLE TEXT */
+.bubble {
+    display: none;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: #ff4fae;
+    font-size: 1.3rem;
+    margin: 8px auto;
+    width: fit-content;
+    animation: pop 0.4s ease;
+}
+@keyframes pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* BUTTONS */
+button {
+    background: #ff9ad7;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    color: white;
+    font-size: 1.1rem;
+    margin: 6px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+button:hover {
+    background: #ff7bc7;
+    transform: scale(1.06);
+}
+
+/* FACT BOX */
+.fact-box {
+    background: white;
+    border-radius: 20px;
+    padding: 18px;
+    min-height: 40px;
+    font-size: 1.2rem;
+    color: #ff4fae;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    margin-top: 15px;
+}
+
+/* CAT COUNTER */
+.counter {
+    font-size: 1.3rem;
+    margin: 10px 0;
+    color: #d94fae;
+}
+
+/* CAT GALLERY SLIDER */
+.gallery {
+    margin-top: 30px;
+}
+.gallery img {
+    width: 190px;
+    margin: 8px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+.gallery img:hover {
+    transform: scale(1.15);
+}
+
+/* PAW FOLLOW EFFECT */
+.paw {
+    position: fixed;
+    font-size: 2rem;
+    pointer-events: none;
+    animation: fade 1.2s linear forwards;
+}
+@keyframes fade {
+    to { transform: translateY(-50px); opacity: 0; }
+}
+
+/* DARK MODE */
+.night {
+    background: #181824;
+    color: #ffe2f9;
+}
+.night .fact-box {
+    background: #2a2a3a;
+    color: #ffb7ef;
+}
+.night button {
+    background: #a45cc7;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🐾 Welcome to the Cute Cat Universe! 🐾</h1>
+
+<div class="container">
+
+    <!-- CAT IMAGE -->
+    <img src="https://media.tenor.com/1K_qHgjWfukAAAAi/cat-cute.gif"
+         class="cat-img" id="cat">
+
+    <div class="bubble" id="bubble">Meeeooowww! 💖</div>
+
+    <!-- PET COUNTER -->
+    <div class="counter" id="counter">Pet Count: 0 🐾</div>
+
+    <!-- BUTTONS -->
+    <button onclick="showFact()">Random Cat Fact 🐱</button>
+    <button onclick="playMeow()">Play Meow Sound 🔊</button>
+    <button onclick="toggleTheme()">Toggle Day/Night 🌙</button>
+
+    <!-- FACT DISPLAY -->
+    <div class="fact-box" id="factBox"></div>
+
+    <!-- GALLERY -->
+    <h2 style="color:#ff72c6; margin-top:35px;">Cute Cat Gallery 😺💞</h2>
+    <div class="gallery">
+        <img src="https://i.pinimg.com/originals/de/3e/cf/de3ecf4a8f29d141cdd192d08d7569b0.gif">
+        <img src="https://media.tenor.com/Vz1R9f7D78EAAAAC/cat-kitty.gif">
+        <img src="https://media.tenor.com/OZ0qYjCy7GgAAAAd/cat.gif">
+        <img src="https://media.tenor.com/4ZwmT6ymlAQAAAAj/cute-cat.gif">
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+/* PETTING CAT */
+let petCount = 0;
+const cat = document.getElementById("cat");
+const bubble = document.getElementById("bubble");
+const counter = document.getElementById("counter");
+
+cat.addEventListener("click", () => {
+    petCount++;
+    counter.textContent = "Pet Count: " + petCount + " 🐾";
+    bubble.style.display = "inline-block";
+    setTimeout(() => bubble.style.display = "none", 1000);
+});
+
+/* CAT FACTS */
+const facts = [
+    "Cats sleep for 70% of their lives 😴",
+    "A group of cats is called a clowder!",
+    "Cats can jump up to 6 times their height 😼",
+    "Your cat's purr can heal muscles & bones 💗",
+    "Cats have 230 bones!",
+    "Cats can rotate their ears 180° 👂",
+    "Cats walk like camels and giraffes!"
+];
+
+function showFact() {
+    let random = facts[Math.floor(Math.random() * facts.length)];
+    document.getElementById("factBox").textContent = random;
+}
+
+/* CAT SOUND */
+function playMeow() {
+    new Audio("https://www.fesliyanstudios.com/play-mp3/387").play();
+}
+
+/* THEME TOGGLE */
+function toggleTheme() {
+    document.body.classList.toggle("night");
+}
+
+/* PAW CURSOR TRAIL */
+document.addEventListener("mousemove", (e) => {
+    const paw = document.createElement("div");
+    paw.textContent = "🐾";
+    paw.className = "paw";
+    paw.style.left = e.pageX + "px";
+    paw.style.top = e.pageY + "px";
+    document.body.appendChild(paw);
+    setTimeout(() => paw.remove(), 1200);
+});
+</script>
+
+</body>
+</html>
